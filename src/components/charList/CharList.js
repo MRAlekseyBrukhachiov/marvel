@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
@@ -52,8 +52,6 @@ const CharList = (props) => {
         setCharEnded(ended);
     }
 
-    console.log('charList!');
-
     const itemRefs = useRef([]);
 
     const focusOnItem = (i) => {
@@ -63,6 +61,7 @@ const CharList = (props) => {
     }
 
     const renderItems = (arr) => {
+        
         const items = arr.map(({id, thumbnail, name}, i) => {
             let styleImg = {'objectFit': 'cover'}
             if (thumbnail.indexOf('image_not_available') !== -1) {
@@ -101,14 +100,13 @@ const CharList = (props) => {
         );
     }
 
-    // const items = renderItems(charList);
-
-    // const errorMessage = error ? <ErrorMessage/> : null;
-    // const spinner = loading && !newItemLoading ? <Spinner/> : null;
+    const elements = useMemo(() => {
+        return setContent(process, () => renderItems(charList), newItemLoading);
+    }, [process]);
 
     return (
         <div className="char__list">
-            {setContent(process, () => renderItems(charList), newItemLoading)}               
+            {elements}               
             <button 
                 className="button button__main button__long"
                 disabled={newItemLoading}
