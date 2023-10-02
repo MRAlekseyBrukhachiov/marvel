@@ -1,7 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { Helmet } from "react-helmet";
-import PropTypes from 'prop-types';
 
 import useMarvelService from '../../services/MarvelService';
 import setContent from "../../utils/setContent";
